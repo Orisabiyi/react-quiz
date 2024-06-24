@@ -1,5 +1,4 @@
 function Questions({ questions, answers, index, dispatch }) {
-  if (answers) console.log(answers);
   return (
     <div>
       <h4>{questions[index].question}</h4>
