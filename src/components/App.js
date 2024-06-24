@@ -4,9 +4,11 @@ import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
+import Questions from "./Questions";
 
 const initialState = {
   questions: [],
+  index: 0,
   status: "loading",
 };
 
@@ -24,7 +26,10 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ status, questions }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, index, status }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   useEffect(function () {
     async function getQuestions() {
@@ -55,6 +60,9 @@ function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && <StartScreen dispatch={dispatch} />}
+        {status === "start" && (
+          <Questions questions={questions} index={index} />
+        )}
       </Main>
     </div>
   );
