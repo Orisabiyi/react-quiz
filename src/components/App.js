@@ -15,6 +15,8 @@ const initialState = {
 };
 
 function reducer(state, action) {
+  const curQuestion = state.questions[state.index];
+
   switch (action.type) {
     case "dataReceived":
       return { ...state, questions: action.payload, status: "ready" };
@@ -23,7 +25,6 @@ function reducer(state, action) {
       return { ...state, status: "error" };
 
     case "start":
-      const curQuestion = state.questions[state.index];
       const answerArr = curQuestion.incorrect_answers
         .concat(curQuestion.correct_answer)
         .sort(() => Math.random() - 0.5);
@@ -34,13 +35,16 @@ function reducer(state, action) {
         options: answerArr,
       };
 
+    case "answer":
+      return { ...state, answer: curQuestion.correct_answer };
+
     default:
       return "Unknown";
   }
 }
 
 function App() {
-  const [{ questions, index, options, status }, dispatch] = useReducer(
+  const [{ questions, index, options, status, answer }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -79,6 +83,7 @@ function App() {
             questions={questions}
             options={options}
             index={index}
+            answer={answer}
             dispatch={dispatch}
           />
         )}
