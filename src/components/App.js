@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Questions from "./Questions";
+import Options from "./Options";
 
 const initialState = {
   questions: [],
@@ -15,8 +16,6 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  const curQuestion = state.questions[state.index];
-
   switch (action.type) {
     case "dataReceived":
       return { ...state, questions: action.payload, status: "ready" };
@@ -25,6 +24,7 @@ function reducer(state, action) {
       return { ...state, status: "error" };
 
     case "start":
+      const curQuestion = state.questions.at(state.index);
       const answerArr = curQuestion.incorrect_answers
         .concat(curQuestion.correct_answer)
         .sort(() => Math.random() - 0.5);
@@ -83,13 +83,9 @@ function App() {
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
         {status === "active" && (
-          <Questions
-            questions={questions}
-            options={options}
-            index={index}
-            answer={answer}
-            dispatch={dispatch}
-          />
+          <Questions questions={questions} index={index}>
+            <Options options={options} answer={answer} dispatch={dispatch} />
+          </Questions>
         )}
       </Main>
     </div>
