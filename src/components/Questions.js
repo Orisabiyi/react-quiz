@@ -5,8 +5,10 @@ function Questions({ questions, options, index, dispatch }) {
       <div className="options">
         {options.map((option) => (
           <button
-            className={`btn btn-option`}
-            onClick={() => dispatch({ type: "" })}
+            className={`btn btn-option ${
+              option === questions[index].correct_answer ? "correct" : "wrong"
+            }`}
+            onClick={() => dispatch({ type: "answer", payload: option })}
             key={option}
           >
             {option}

@@ -9,6 +9,7 @@ import Questions from "./Questions";
 const initialState = {
   questions: [],
   options: null,
+  answer: null,
   index: 0,
   status: "loading",
 };
@@ -17,8 +18,10 @@ function reducer(state, action) {
   switch (action.type) {
     case "dataReceived":
       return { ...state, questions: action.payload, status: "ready" };
+
     case "error":
       return { ...state, status: "error" };
+
     case "start":
       const curQuestion = state.questions[state.index];
       const answerArr = curQuestion.incorrect_answers
@@ -27,9 +30,10 @@ function reducer(state, action) {
 
       return {
         ...state,
-        status: "start",
+        status: "active",
         options: answerArr,
       };
+
     default:
       return "Unknown";
   }
@@ -70,7 +74,7 @@ function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && <StartScreen dispatch={dispatch} />}
-        {status === "start" && (
+        {status === "active" && (
           <Questions
             questions={questions}
             options={options}
