@@ -8,7 +8,7 @@ import Questions from "./Questions";
 
 const initialState = {
   questions: [],
-  answers: null,
+  options: null,
   index: 0,
   status: "loading",
 };
@@ -21,14 +21,14 @@ function reducer(state, action) {
       return { ...state, status: "error" };
     case "start":
       const curQuestion = state.questions[state.index];
-      const answerArr = curQuestion.incorrect_answers.concat(
-        curQuestion.correct_answer
-      );
+      const answerArr = curQuestion.incorrect_answers
+        .concat(curQuestion.correct_answer)
+        .sort(() => Math.random() - 0.5);
 
       return {
         ...state,
         status: "start",
-        answers: answerArr.sort(() => Math.random() - 0.5),
+        options: answerArr,
       };
     default:
       return "Unknown";
@@ -36,7 +36,7 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ questions, index, answers, status }, dispatch] = useReducer(
+  const [{ questions, index, options, status }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -73,7 +73,7 @@ function App() {
         {status === "start" && (
           <Questions
             questions={questions}
-            answers={answers}
+            options={options}
             index={index}
             dispatch={dispatch}
           />

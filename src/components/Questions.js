@@ -1,15 +1,15 @@
-function Questions({ questions, answers, index, dispatch }) {
+function Questions({ questions, options, index, dispatch }) {
   return (
     <div>
       <h4>{questions[index].question}</h4>
       <div className="options">
-        {answers.map((answer) => (
+        {options.map((option) => (
           <button
-            className="btn btn-option"
+            className={`btn btn-option`}
             onClick={() => dispatch({ type: "" })}
-            key={answer}
+            key={option}
           >
-            {answer}
+            {option}
           </button>
         ))}
       </div>
