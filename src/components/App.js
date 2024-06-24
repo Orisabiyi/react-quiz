@@ -36,7 +36,7 @@ function reducer(state, action) {
       };
 
     case "answer":
-      return { ...state, answer: curQuestion.correct_answer };
+      return { ...state, answer: action.payload };
 
     default:
       return "Unknown";
@@ -48,6 +48,8 @@ function App() {
     reducer,
     initialState
   );
+
+  const numQuestions = questions.length;
 
   useEffect(function () {
     async function getQuestions() {
@@ -77,7 +79,9 @@ function App() {
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
-        {status === "ready" && <StartScreen dispatch={dispatch} />}
+        {status === "ready" && (
+          <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
+        )}
         {status === "active" && (
           <Questions
             questions={questions}
