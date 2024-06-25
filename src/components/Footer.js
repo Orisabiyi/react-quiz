@@ -1,4 +1,4 @@
-function Footer({ children, answer, dispatch }) {
+function Footer({ children }) {
   return <footer>{children}</footer>;
 }
 

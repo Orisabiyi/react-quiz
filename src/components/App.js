@@ -6,6 +6,7 @@ import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Questions from "./Questions";
 import Footer from "./Footer";
+import Submit from "./Submit";
 
 const initialState = {
   questions: [],
@@ -92,7 +93,14 @@ function App() {
               answer={answer}
               dispatch={dispatch}
             />
-            <Footer answer={answer} dispatch={dispatch} />
+            <Footer>
+              <Submit
+                answer={answer}
+                index={index}
+                numQuestions={numQuestions}
+                dispatch={dispatch}
+              />
+            </Footer>
           </>
         )}
       </Main>
