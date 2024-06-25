@@ -24,14 +24,14 @@ function reducer(state, action) {
 
     case "start":
       const curQuestion = state.questions.at(state.index);
-      const answerArr = curQuestion.incorrect_answers
+      const optionsArr = curQuestion.incorrect_answers
         .concat(curQuestion.correct_answer)
         .sort(() => Math.random() - 0.5);
 
       return {
         ...state,
         status: "active",
-        options: answerArr,
+        options: optionsArr,
       };
 
     case "answer":
