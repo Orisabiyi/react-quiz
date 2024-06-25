@@ -5,7 +5,6 @@ import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Questions from "./Questions";
-import Options from "./Options";
 
 const initialState = {
   questions: [],
@@ -83,9 +82,13 @@ function App() {
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
         {status === "active" && (
-          <Questions questions={questions} index={index}>
-            <Options options={options} answer={answer} dispatch={dispatch} />
-          </Questions>
+          <Questions
+            questions={questions}
+            index={index}
+            options={options}
+            answer={answer}
+            dispatch={dispatch}
+          />
         )}
       </Main>
     </div>
