@@ -9,7 +9,6 @@ import Footer from "./Footer";
 
 const initialState = {
   questions: [],
-  options: null,
   answer: null,
   index: 0,
   status: "loading",
@@ -24,19 +23,17 @@ function reducer(state, action) {
       return { ...state, status: "error" };
 
     case "start":
-      const curQuestion = state.questions.at(state.index);
-      const optionsArr = curQuestion.incorrect_answers
-        .concat(curQuestion.correct_answer)
-        .sort(() => Math.random() - 0.5);
-
-      return {
-        ...state,
-        status: "active",
-        options: optionsArr,
-      };
+      return { ...state, status: "active" };
 
     case "answer":
       return { ...state, answer: action.payload };
+
+    case "nextQuestion":
+      return {
+        ...state,
+        index: state.index + 1,
+        answer: null,
+      };
 
     default:
       return "Unknown";
@@ -44,12 +41,16 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ questions, index, options, status, answer }, dispatch] = useReducer(
+  const [{ questions, index, status, answer }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
-  const numQuestions = questions.length;
+  const numQuestions = questions?.length;
+  const curQuestion = questions?.at(index);
+  const options = curQuestion?.incorrect_answers
+    .concat(curQuestion.correct_answer)
+    .sort();
 
   useEffect(function () {
     async function getQuestions() {
@@ -85,7 +86,7 @@ function App() {
         {status === "active" && (
           <>
             <Questions
-              questions={questions}
+              curQuestion={curQuestion}
               index={index}
               options={options}
               answer={answer}

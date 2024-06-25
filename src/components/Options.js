@@ -1,4 +1,4 @@
-function Options({ options, answer, curQuestion, dispatch }) {
+function Options({ answer, curQuestion, options, dispatch }) {
   return (
     <div className="options">
       <div className="options">

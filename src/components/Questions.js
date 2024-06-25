@@ -1,8 +1,6 @@
 import Options from "./Options";
 
-function Questions({ questions, index, options, answer, dispatch }) {
-  const curQuestion = questions.at(index);
-
+function Questions({ curQuestion, options, index, answer, dispatch }) {
   return (
     <div>
       <h4>{curQuestion.question}</h4>
