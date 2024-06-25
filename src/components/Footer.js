@@ -1,6 +1,15 @@
-function Footer({ answer }) {
+function Footer({ answer, dispatch }) {
   return (
-    <footer>{answer && <button className="btn btn-ui">Next</button>}</footer>
+    <footer>
+      {answer && (
+        <button
+          className="btn btn-ui"
+          onClick={() => dispatch({ type: "nextQuestion" })}
+        >
+          Next
+        </button>
+      )}
+    </footer>
   );
 }
 
